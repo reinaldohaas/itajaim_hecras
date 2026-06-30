@@ -1,0 +1,12 @@
+Plan Title=Q10-Q25-Q100
+Geom File=g01
+Flow File=f01
+Plan Information:
+  Short Identifier=Q10-Q25-Q100
+Computation Interval= 0
+Run HTab Parameters:
+  -1 ,8 ,.5 ,1
+Run HTab Parameters:
+  -1 ,8 ,.5 ,1
+UNET D1 Cores= 4
+Run RASMapper= 0

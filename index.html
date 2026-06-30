@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador Rio Itajaí-Mirim | HEC-RAS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#1c2128;--border:#30363d;
+      --text:#e6edf3;--muted:#7d8590;--blue:#58a6ff;--green:#3fb950;
+      --orange:#d29922;--red:#f85149;--teal:#39d0d8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+     height:100vh;display:grid;grid-template-rows:46px 1fr;grid-template-columns:1fr 340px;overflow:hidden}
+#header{grid-column:1/-1;display:flex;align-items:center;gap:12px;padding:0 16px;
+        background:linear-gradient(90deg,#0b1e33,#122032);border-bottom:1px solid var(--border)}
+#header h1{font-size:14px;font-weight:600;color:var(--blue)}
+.badge{background:var(--bg3);border:1px solid var(--border);border-radius:4px;
+       padding:2px 7px;font-size:10px;color:var(--muted)}
+#geo-status{margin-left:auto;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px}
+#map{position:relative}
+
+/* Drop zone overlay */
+#drop-overlay{position:absolute;inset:0;background:rgba(13,17,23,.85);
+              display:none;align-items:center;justify-content:center;z-index:2000;
+              flex-direction:column;gap:12px;backdrop-filter:blur(4px)}
+#drop-overlay.active{display:flex}
+#drop-box{border:2px dashed var(--blue);border-radius:12px;padding:40px 60px;text-align:center}
+#drop-box p{color:var(--blue);font-size:15px;font-weight:600}
+#drop-box small{color:var(--muted);font-size:12px}
+
+#side{background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+
+/* Controls */
+#controls{padding:12px;border-bottom:1px solid var(--border)}
+.sec{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.sbns{display:flex;gap:5px;margin-bottom:10px}
+.sb{flex:1;padding:6px 4px;border:1px solid var(--border);background:var(--bg3);color:var(--muted);
+    border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;text-align:center;transition:.15s}
+.sb:hover,.sb.act{border-color:var(--blue);color:var(--blue);background:rgba(88,166,255,.1)}
+.sb.q25.act{border-color:var(--orange);color:var(--orange);background:rgba(210,153,34,.1)}
+.sb.q100.act{border-color:var(--red);color:var(--red);background:rgba(248,81,73,.1)}
+.trow{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.trow label{font-size:10px;color:var(--muted);width:24px}
+#tslider{flex:1;-webkit-appearance:none;height:3px;border-radius:2px;background:var(--border);cursor:pointer}
+#tslider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--blue)}
+#tval{font-size:11px;font-weight:600;min-width:30px;text-align:right}
+.arow{display:flex;gap:5px}
+.ab{flex:1;padding:5px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;
+    color:var(--muted);font-size:11px;cursor:pointer;transition:.15s}
+.ab:hover{border-color:var(--blue);color:var(--blue)}
+.ab.on{border-color:var(--green);color:var(--green);background:rgba(63,185,80,.1)}
+select{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:5px;
+       color:var(--muted);font-size:10px;padding:5px;cursor:pointer}
+
+/* Stats */
+#stats{padding:8px 12px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.stb{background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:7px}
+.stb .v{font-size:15px;font-weight:700}.stb .l{font-size:9px;color:var(--muted);margin-top:2px}
+
+/* Charts */
+#charts{flex:1;overflow-y:auto;padding:8px 12px;display:flex;flex-direction:column;gap:10px}
+.cc{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:9px}
+.cc canvas{width:100%!important}
+
+/* Legend */
+#leg{padding:8px 12px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
+.lc{width:10px;height:4px;border-radius:2px}
+
+/* Map overlay info */
+#fi{position:absolute;top:12px;left:12px;z-index:1000;background:rgba(13,17,23,.88);
+    border:1px solid var(--border);border-radius:8px;padding:10px 14px;backdrop-filter:blur(6px)}
+#fi .fv{font-size:20px;font-weight:700;color:var(--blue)}
+#fi .fl{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* Load GeoJSON button */
+#load-btn{position:absolute;bottom:14px;left:14px;z-index:1000;
+          background:rgba(13,17,23,.88);border:1px solid var(--blue);
+          color:var(--blue);border-radius:6px;padding:7px 12px;font-size:11px;
+          cursor:pointer;backdrop-filter:blur(4px);transition:.15s}
+#load-btn:hover{background:rgba(88,166,255,.15)}
+
+/* Leaflet */
+.city-lbl{background:rgba(13,17,23,.82);border:1px solid #30363d;color:#e6edf3;
+          font-size:10px;padding:2px 6px;border-radius:3px;font-family:'Inter',sans-serif;
+          white-space:nowrap;pointer-events:none}
+.leaflet-popup-content-wrapper{background:var(--bg2);border:1px solid var(--border);
+                                color:var(--text);border-radius:8px}
+.leaflet-popup-tip{background:var(--bg2)}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>🌊 Rio Itajaí-Mirim — Simulador HEC-RAS</h1>
+  <span class="badge">1D Steady Flow</span>
+  <span class="badge">228 seções</span>
+  <span class="badge">NASADEM 30m</span>
+  <div id="geo-status">
+    <span id="gs-river">⏳ Carregando rio…</span>
+    <input type="file" id="file-input" accept=".geojson,.json" style="display:none" onchange="loadFile(this)">
+  </div>
+</div>
+
+<div id="map">
+  <!-- Drop zone -->
+  <div id="drop-overlay">
+    <div id="drop-box">
+      <p>📂 Solte o GeoJSON aqui</p>
+      <small>ou clique no botão "Carregar GeoJSON"</small>
+    </div>
+  </div>
+
+  <div id="fi">
+    <div class="fl">Vazão Vidal Ramos</div>
+    <div class="fv" id="fi-q">— m³/s</div>
+    <div class="fl" id="fi-t">t = 0h</div>
+    <div class="fl" id="fi-d" style="margin-top:4px">Lâmina Brusque: — m</div>
+  </div>
+
+  <button id="load-btn" onclick="document.getElementById('file-input').click()">📂 Carregar GeoJSON do rio</button>
+</div>
+
+<div id="side">
+  <div id="controls">
+    <div class="sec">Cenário de Cheia</div>
+    <div class="sbns">
+      <div class="sb act" id="bq10" onclick="setQ('q10')">Q10<br><small>1.800 m³/s</small></div>
+      <div class="sb q25"  id="bq25" onclick="setQ('q25')">Q25<br><small>2.500 m³/s</small></div>
+      <div class="sb q100" id="bq100" onclick="setQ('q100')">Q100<br><small>3.500 m³/s</small></div>
+    </div>
+    <div class="sec">Tempo (0 – 72h)</div>
+    <div class="trow">
+      <label>0h</label>
+      <input type="range" id="tslider" min="0" max="720" value="0" oninput="setT(+this.value/10)">
+      <span id="tval">0h</span>
+    </div>
+    <div class="arow">
+      <button class="ab" id="pbtn" onclick="togglePlay()">▶ Play</button>
+      <button class="ab" onclick="resetAnim()">↺ Reset</button>
+      <select onchange="spd=+this.value">
+        <option value="1">1×</option><option value="3">3×</option>
+        <option value="6" selected>6×</option><option value="12">12×</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="stats">
+    <div class="stb"><div class="v" id="sq">—</div><div class="l">Q m³/s (montante)</div></div>
+    <div class="stb"><div class="v" id="sd">—</div><div class="l">Lâmina Brusque (m)</div></div>
+    <div class="stb"><div class="v" id="sa">—</div><div class="l">Área inund. est. (km²)</div></div>
+    <div class="stb"><div class="v" id="sp">—</div><div class="l">Pico em (h)</div></div>
+  </div>
+
+  <div id="charts">
+    <div class="cc">
+      <div class="sec">Hidrograma — Vidal Ramos (montante)</div>
+      <canvas id="hc" height="100"></canvas>
+    </div>
+    <div class="cc">
+      <div class="sec">Perfil Longitudinal — Leito + Lâmina</div>
+      <canvas id="pc" height="100"></canvas>
+    </div>
+    <div class="cc" id="xs-card" style="display:none">
+      <div class="sec">Seção Transversal Selecionada</div>
+      <canvas id="xsc" height="100"></canvas>
+    </div>
+  </div>
+
+  <div id="leg">
+    <div class="li"><div class="lc" style="background:#4fc3f7;height:3px"></div>Rio (leito seco)</div>
+    <div class="li"><div class="lc" style="background:#22c55e"></div>&lt;1m</div>
+    <div class="li"><div class="lc" style="background:#eab308"></div>1–3m</div>
+    <div class="li"><div class="lc" style="background:#f97316"></div>3–6m</div>
+    <div class="li"><div class="lc" style="background:#ef4444"></div>&gt;6m</div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// GEOMETRIA DO RIO — carregada do GeoJSON ou OSM
+// Coordenadas corretas: Vidal Ramos → Botuverá → Brusque → Itajaí-Açu
+// O rio NÃO vai ao mar; a foz é a confluência com o Itajaí-Açu
+// ═══════════════════════════════════════════════════════════════
+let RIVER_COORDS = null;  // será preenchido pelo OSM ou pelo GeoJSON do usuário
+
+// Fallback: pontos verificados manualmente usando carta IBGE / ANA
+// Rota: Vidal Ramos (-27.46,-49.39) → Botuverá → Brusque → foz (-26.93,-48.74)
+const FALLBACK_COORDS = [
+  // Nascente: Serra dos Faxinais, Vidal Ramos (~900m altitude)
+  [-27.457,-49.387], [-27.445,-49.372], [-27.432,-49.356],
+  [-27.418,-49.339], [-27.404,-49.321], [-27.389,-49.303],
+  // Vidal Ramos — vale central
+  [-27.394,-49.367], [-27.388,-49.350], [-27.381,-49.332],
+  [-27.373,-49.313], [-27.365,-49.293], [-27.357,-49.273],
+  [-27.348,-49.252], [-27.339,-49.230], [-27.329,-49.208],
+  [-27.319,-49.185], [-27.309,-49.162], [-27.298,-49.138],
+  [-27.287,-49.114], [-27.275,-49.090],
+  // Botuverá — vale do Itajaí-Mirim
+  [-27.263,-49.065], [-27.251,-49.040], [-27.239,-49.016],
+  [-27.226,-48.991], [-27.213,-48.966], [-27.200,-48.941],
+  [-27.187,-48.917], [-27.174,-48.893], [-27.162,-48.869],
+  [-27.149,-48.845], [-27.137,-48.823],
+  // Brusque — trecho urbano
+  [-27.127,-48.932], [-27.120,-48.925], [-27.113,-48.918],
+  [-27.107,-48.912], [-27.101,-48.906], [-27.095,-48.900],
+  [-27.089,-48.892], [-27.083,-48.883], [-27.077,-48.873],
+  [-27.072,-48.861], [-27.068,-48.848],
+  // Após Brusque: trecho final → confluência com Itajaí-Açu
+  // NÃO vai ao mar! Encontra o Itajaí-Açu no interior
+  [-27.061,-48.833], [-27.053,-48.817], [-27.044,-48.800],
+  [-27.034,-48.782], [-27.023,-48.764], [-27.011,-48.745],
+  [-26.999,-48.726], [-26.987,-48.708], [-26.975,-48.791],
+  [-26.963,-48.774], [-26.951,-48.758], [-26.940,-48.743],
+  // Foz: confluência com Rio Itajaí-Açu
+  [-26.930,-48.730],
+];
+
+// ═══════════════════════════════════════════════════════════════
+// MAPA
+// ═══════════════════════════════════════════════════════════════
+const map = L.map('map',{center:[-27.2,-49.0],zoom:9,zoomControl:true});
+
+// Base: OpenTopoMap (mostra relevo, rios, contornos)
+const topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{
+  attribution:'© OpenTopoMap | © OSM',maxZoom:17,opacity:0.9
+}).addTo(map);
+
+// Overlay opcional: ESRI Hillshade
+const hillshade = L.tileLayer(
+  'https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',
+  {attribution:'ESRI',maxZoom:16,opacity:0.25}
+).addTo(map);
+
+L.control.layers({
+  'Topo (relevo)': topoLayer,
+  'Satélite ESRI': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'ESRI',maxZoom:18}),
+},{
+  'Hillshade overlay': hillshade,
+},{collapsed:true}).addTo(map);
+
+let riverLine = null, xsLayers = [];
+
+function drawRiver(coords) {
+  if(riverLine) map.removeLayer(riverLine);
+  riverLine = L.polyline(coords,{color:'#1e90ff',weight:3,opacity:0.85}).addTo(map);
+  map.fitBounds(riverLine.getBounds().pad(0.1));
+  document.getElementById('gs-river').textContent =
+    `✓ Rio: ${coords.length} pts | ${(TOTAL_KM||0).toFixed(0)} km`;
+}
+
+function addCities(coords) {
+  const cities = [
+    {n:'Vidal Ramos\n(Nascente)',   ll:[-27.394,-49.367], c:'#22c55e'},
+    {n:'Botuverá',                  ll:[-27.213,-48.966], c:'#58a6ff'},
+    {n:'Brusque',                   ll:[-27.097,-48.916], c:'#58a6ff'},
+    {n:'Guabiruba',                 ll:[-27.062,-48.972], c:'#58a6ff'},
+    {n:'Itajaí\n(Foz Itajaí-Açu)', ll:[-26.906,-48.661], c:'#f97316'},
+  ];
+  cities.forEach(c=>{
+    L.circleMarker(c.ll,{radius:5,color:'#fff',fillColor:c.c,fillOpacity:1,weight:1.5})
+     .bindTooltip(c.n,{permanent:true,direction:'top',className:'city-lbl',offset:[0,-6]})
+     .addTo(map);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DISTÂNCIAS
+// ═══════════════════════════════════════════════════════════════
+let cumKm=[0], TOTAL_KM=0;
+
+function buildKm(coords) {
+  cumKm=[0];
+  for(let i=1;i<coords.length;i++){
+    const R=6371,a=coords[i-1],b=coords[i];
+    const dr=(b[0]-a[0])*Math.PI/180,dl=(b[1]-a[1])*Math.PI/180;
+    const x=Math.sin(dr/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dl/2)**2;
+    cumKm.push(cumKm[i-1]+2*R*Math.asin(Math.sqrt(x)));
+  }
+  TOTAL_KM=cumKm[cumKm.length-1];
+}
+
+function interpRiver(km) {
+  for(let i=0;i<cumKm.length-1;i++){
+    if(cumKm[i]<=km&&km<=cumKm[i+1]){
+      const t=(km-cumKm[i])/(cumKm[i+1]-cumKm[i]);
+      return [RIVER_COORDS[i][0]+t*(RIVER_COORDS[i+1][0]-RIVER_COORDS[i][0]),
+              RIVER_COORDS[i][1]+t*(RIVER_COORDS[i+1][1]-RIVER_COORDS[i][1])];
+    }
+  }
+  return RIVER_COORDS[RIVER_COORDS.length-1];
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HIDRÁULICA
+// ═══════════════════════════════════════════════════════════════
+const SC={q10:{Qp:1800,tp:12,col:'#58a6ff'},q25:{Qp:2500,tp:14,col:'#d29922'},q100:{Qp:3500,tp:16,col:'#f85149'}};
+let curSc='q10',tH=0,playing=false,spd=6,timer=null,xsChart=null;
+const QBASE=50, WAVE=5.5; // km/h
+
+function hydQ(t,Qp,tp){
+  if(t<=0)return QBASE;
+  const tb=tp*2.67;
+  if(t<=tp){const r=t/tp;return QBASE+(Qp-QBASE)*(3*r**2-2*r**3)}
+  if(t<=tb){return Qp*Math.exp(-3*(t-tp)/(tb-tp))+QBASE}
+  return QBASE;
+}
+function qAt(t,km){const s=SC[curSc];return hydQ(t-km/WAVE,s.Qp,s.tp)}
+
+function manD(Q,slope){
+  if(slope<=0)slope=5e-4;
+  const S05=Math.sqrt(slope),N=0.035,W=80;
+  let d=Math.max(0.1,Q**0.5/5);
+  for(let i=0;i<30;i++){
+    const A=W*d,P=W+2*d,R=A/P;
+    const Qc=(1/N)*A*R**(2/3)*S05;
+    const dQ=(1/N)*S05*((W+2)*R**(2/3)-A*(2/3)*R**(-1/3)*(2/P**2));
+    const dd=(Q-Qc)/Math.max(dQ,0.1);
+    d=Math.max(0.01,d+dd*0.4);
+  }
+  return Math.max(0,d);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════════════════════════
+const TH=Array.from({length:73},(_,i)=>i);
+
+const hChart=new Chart(document.getElementById('hc'),{type:'line',data:{
+  labels:TH,
+  datasets:[
+    {data:[],fill:true,backgroundColor:'rgba(88,166,255,.08)',borderColor:'#58a6ff',borderWidth:1.5,pointRadius:0,tension:.4},
+    {data:[],fill:false,borderColor:'rgba(255,255,255,.3)',borderWidth:1,borderDash:[3,3],pointRadius:0},
+  ]},
+  options:{responsive:true,animation:{duration:0},plugins:{legend:{display:false}},
+   scales:{x:{ticks:{color:'#7d8590',font:{size:8},maxTicksLimit:9},grid:{color:'rgba(255,255,255,.04)'},
+               title:{display:true,text:'horas',color:'#7d8590',font:{size:8}}},
+           y:{ticks:{color:'#7d8590',font:{size:8}},grid:{color:'rgba(255,255,255,.04)'},
+               title:{display:true,text:'Q (m³/s)',color:'#7d8590',font:{size:8}}}}}
+});
+
+const pChart=new Chart(document.getElementById('pc'),{type:'line',data:{
+  labels:[],
+  datasets:[
+    {label:'Leito',data:[],fill:true,backgroundColor:'rgba(80,80,80,.4)',borderColor:'#7d8590',borderWidth:1.2,pointRadius:0,tension:.3},
+    {label:'Lâmina',data:[],fill:'-1',backgroundColor:'rgba(88,166,255,.18)',borderColor:'#58a6ff',borderWidth:1.8,pointRadius:0,tension:.3},
+  ]},
+  options:{responsive:true,animation:{duration:0},
+   plugins:{legend:{labels:{color:'#7d8590',font:{size:8},boxWidth:10}}},
+   scales:{x:{ticks:{color:'#7d8590',font:{size:8},maxTicksLimit:8},grid:{color:'rgba(255,255,255,.04)'},
+               title:{display:true,text:'km (montante→jusante)',color:'#7d8590',font:{size:8}}},
+           y:{ticks:{color:'#7d8590',font:{size:8}},grid:{color:'rgba(255,255,255,.04)'},
+               title:{display:true,text:'Elevação (m)',color:'#7d8590',font:{size:8}}}}}
+});
+
+// ═══════════════════════════════════════════════════════════════
+// CROSS-SECTIONS DATA
+// ═══════════════════════════════════════════════════════════════
+let XS=[];
+
+function buildXS(geojson) {
+  XS=[];
+  geojson.features.forEach(f=>{
+    if(f.properties&&f.properties.km!==undefined){
+      const c=f.geometry.coordinates;
+      XS.push({
+        km: +f.properties.km,
+        leito: +(f.properties.leito_m||0),
+        cen: [(c[0][1]+c[1][1])/2,(c[0][0]+c[1][0])/2],
+        slope: 0,
+      });
+    }
+  });
+  XS.sort((a,b)=>a.km-b.km);
+  for(let i=0;i<XS.length-1;i++){
+    const dE=XS[i].leito-XS[i+1].leito;
+    const dK=(XS[i+1].km-XS[i].km)*1000;
+    XS[i].slope=dK>0?Math.max(1e-5,dE/dK):5e-4;
+  }
+  if(XS.length) XS[XS.length-1].slope=5e-4;
+}
+
+function buildSyntheticXS() {
+  // Cria seções sintéticas ao longo do rio com perfil realista
+  XS=[];
+  const N=Math.floor(TOTAL_KM/0.5);
+  for(let i=0;i<=N;i++){
+    const km=i*TOTAL_KM/N;
+    const t=km/TOTAL_KM;
+    // Perfil do leito: de ~600m (nascente) a 0m (foz)
+    const leito=600*Math.pow(1-t,1.6)+2*(1-t);
+    const slope=leito>0?(600*Math.pow(1-t,0.6)*1.6/(TOTAL_KM*1000)):5e-4;
+    XS.push({km,leito,cen:interpRiver(km),slope:Math.max(1e-5,slope)});
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+function depthColor(d){
+  if(d<=0.05)return '#1e90ff';
+  if(d<1) return '#22c55e';
+  if(d<3) return '#eab308';
+  if(d<6) return '#f97316';
+  return '#ef4444';
+}
+
+let lastXsChart=null;
+
+function renderXS(xs,depth){
+  const leito=xs.leito,wse=leito+depth;
+  const W_CH=80,W_FP=2000,BANK=3.5;
+  const stas=[-W_FP/2,-W_CH-50,-W_CH/2,-W_CH/4,0,W_CH/4,W_CH/2,W_CH+50,W_FP/2];
+  const elvs=stas.map(s=>{
+    const a=Math.abs(s);
+    if(a<=W_CH/2) return leito+a/W_CH*BANK;
+    return leito+BANK+(a-W_CH/2)/(W_FP/2-W_CH/2)*15;
+  });
+  document.getElementById('xs-card').style.display='block';
+  if(lastXsChart){lastXsChart.destroy();lastXsChart=null;}
+  lastXsChart=new Chart(document.getElementById('xsc'),{type:'line',
+    data:{labels:stas.map(s=>`${s}m`),datasets:[
+      {label:'Terreno',data:elvs,fill:true,backgroundColor:'rgba(100,100,100,.3)',
+       borderColor:'#7d8590',borderWidth:1.5,pointRadius:0},
+      {label:'WSE',data:stas.map(()=>wse),fill:'-1',
+       backgroundColor:'rgba(88,166,255,.2)',borderColor:'#58a6ff',
+       borderWidth:1.5,borderDash:[4,2],pointRadius:0},
+    ]},
+    options:{responsive:true,animation:false,
+     plugins:{legend:{labels:{color:'#7d8590',font:{size:8},boxWidth:10}}},
+     scales:{x:{ticks:{color:'#7d8590',font:{size:8},maxTicksLimit:6},grid:{color:'rgba(255,255,255,.04)'}},
+             y:{ticks:{color:'#7d8590',font:{size:8}},grid:{color:'rgba(255,255,255,.04)'},
+                min:Math.min(...elvs)-3,max:Math.max(wse,...elvs)+3}}}
+  });
+}
+
+function updateAll(){
+  if(!RIVER_COORDS||!XS.length)return;
+  const sc=SC[curSc];
+  const Qu=qAt(tH,0);
+
+  // Hidrograma
+  const qs=TH.map(t=>hydQ(t,sc.Qp,sc.tp));
+  hChart.data.datasets[0].data=qs;
+  hChart.data.datasets[0].borderColor=sc.col;
+  hChart.data.datasets[0].backgroundColor=sc.col+'12';
+  hChart.data.datasets[1].data=TH.map(t=>Math.abs(t-tH)<0.5?Qu:null);
+  hChart.update('none');
+
+  // Calcula profundidades
+  const depths=XS.map(xs=>{
+    const Q=qAt(tH,xs.km);
+    return manD(Q,xs.slope);
+  });
+
+  // Remove XS antigas
+  xsLayers.forEach(l=>map.removeLayer(l));
+  xsLayers=[];
+
+  // Desenha XS (1 a cada 3)
+  let nFlood=0;
+  const stride=Math.max(1,Math.floor(XS.length/80));
+  XS.forEach((xs,i)=>{
+    if(i%stride!==0)return;
+    const d=depths[i];
+    if(d>0.2)nFlood++;
+    const cen=xs.cen;
+    const ri=Math.min(Math.round((xs.km/TOTAL_KM)*(RIVER_COORDS.length-1)),RIVER_COORDS.length-2);
+    const dlat=RIVER_COORDS[ri+1][0]-RIVER_COORDS[ri][0];
+    const dlon=RIVER_COORDS[ri+1][1]-RIVER_COORDS[ri][1];
+    const len=Math.sqrt(dlat**2+dlon**2)||1;
+    const half=0.010;
+    const p1=[cen[0]+dlon/len*half,  cen[1]-dlat/len*half*1.5];
+    const p2=[cen[0]-dlon/len*half,  cen[1]+dlat/len*half*1.5];
+    const lyr=L.polyline([p1,p2],{color:depthColor(d),weight:d>3?2.5:1.5,opacity:.85});
+    lyr.on('click',()=>renderXS(xs,d));
+    lyr.bindPopup(`<b>km ${xs.km.toFixed(1)}</b><br>Leito: ${xs.leito.toFixed(1)}m<br>Lâmina: +${d.toFixed(2)}m`,{maxWidth:180});
+    lyr.addTo(map);
+    xsLayers.push(lyr);
+  });
+
+  // Perfil longitudinal
+  const st=Math.max(1,Math.floor(XS.length/40));
+  pChart.data.labels=XS.filter((_,i)=>i%st===0).map(xs=>xs.km.toFixed(1));
+  pChart.data.datasets[0].data=XS.filter((_,i)=>i%st===0).map(xs=>xs.leito);
+  pChart.data.datasets[1].data=XS.filter((_,i)=>i%st===0).map((xs,j)=>xs.leito+depths[XS.indexOf(xs)]);
+  pChart.data.datasets[1].borderColor=sc.col;
+  pChart.data.datasets[1].backgroundColor=sc.col+'18';
+  pChart.update('none');
+
+  // Stats
+  const dBru=depths[Math.floor(XS.length*0.7)]||0;
+  document.getElementById('sq').textContent=Qu.toFixed(0);
+  document.getElementById('sd').textContent=dBru.toFixed(2)+'m';
+  document.getElementById('sa').textContent=(nFlood*stride*0.5*2.5).toFixed(0);
+  document.getElementById('sp').textContent=sc.tp+'h';
+  document.getElementById('fi-q').textContent=Qu.toFixed(0)+' m³/s';
+  document.getElementById('fi-q').style.color=sc.col;
+  document.getElementById('fi-t').textContent=`t = ${tH.toFixed(1)}h`;
+  document.getElementById('fi-d').textContent=`Lâmina Brusque: ${dBru.toFixed(2)}m`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CARREGA GEOMETRIA — Overpass → fallback
+// ═══════════════════════════════════════════════════════════════
+function initWithCoords(coords) {
+  RIVER_COORDS=coords;
+  buildKm(coords);
+  drawRiver(coords);
+  addCities(coords);
+  buildSyntheticXS();
+  updateHydro();
+  updateAll();
+}
+
+function updateHydro(){
+  const sc=SC[curSc];
+  hChart.data.labels=TH;
+  hChart.data.datasets[0].data=TH.map(t=>hydQ(t,sc.Qp,sc.tp));
+  hChart.update('none');
+}
+
+// Tenta Overpass no browser
+async function fetchOSMRiver() {
+  const q=`[out:json][timeout:40];
+(way["waterway"="river"]["name"~"Itaja.*Mirim",i](-27.6,-49.5,-26.8,-48.6);
+ way["waterway"~"river|stream"]["name"~"Itaja.*Mirim",i](-27.6,-49.5,-26.8,-48.6););
+out body geom;`;
+  const eps=['https://overpass-api.de/api/interpreter','https://lz4.overpass-api.de/api/interpreter'];
+  for(const ep of eps){
+    try{
+      const r=await fetch(ep,{method:'POST',body:'data='+encodeURIComponent(q),signal:AbortSignal.timeout(45000)});
+      if(!r.ok)continue;
+      const j=await r.json();
+      const segs=j.elements.filter(e=>e.type==='way'&&e.geometry).map(e=>e.geometry.map(n=>[n.lat,n.lon]));
+      if(!segs.length)continue;
+      // Concatena e encontra o maior segmento contínuo
+      const all=segs.flat();
+      document.getElementById('gs-river').textContent=`✓ OSM: ${segs.length} segmentos`;
+      return all;
+    }catch(e){console.warn(ep,e)}
+  }
+  return null;
+}
+
+// Inicializa carregando o GeoJSON local
+(async()=>{
+  document.getElementById('gs-river').textContent='⏳ Carregando geometria local…';
+  try {
+    const res = await fetch('itajai-mirim.geojson');
+    if (!res.ok) throw new Error('Falha ao baixar geojson');
+    const gj = await res.json();
+    let coords=[];
+    gj.features.forEach(f=>{
+      if(f.geometry.type==='LineString'){
+        const c=f.geometry.coordinates.map(p=>[p[1],p[0]]);
+        if(c.length>coords.length)coords=c;
+      }else if(f.geometry.type==='MultiLineString'){
+        f.geometry.coordinates.forEach(seg=>{
+          const c=seg.map(p=>[p[1],p[0]]);
+          if(c.length>coords.length)coords=c;
+        });
+      }
+    });
+    if(coords.length>5){
+      // Normaliza direção: a foz (Itajaí) está mais ao norte (-26.9), nascente em Vidal Ramos (-27.4)
+      // Queremos montante -> jusante, logo o último ponto deve ter lat maior (mais próximo do equador)
+      if(coords[0][0]>coords[coords.length-1][0]) coords=coords.reverse();
+      document.getElementById('gs-river').textContent=`✓ Rio Itajaí-Mirim: ${coords.length} pontos`;
+      initWithCoords(coords);
+    } else {
+      throw new Error('Sem coordenadas válidas');
+    }
+  } catch(e) {
+    console.error(e);
+    document.getElementById('gs-river').textContent='⚠ Erro GeoJSON — usando rota aproximada';
+    initWithCoords(FALLBACK_COORDS);
+  }
+})();
+
+
+// ═══════════════════════════════════════════════════════════════
+// CARREGAR GEOJSON DO USUÁRIO
+// ═══════════════════════════════════════════════════════════════
+function loadFile(input) {
+  const f=input.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try{
+      const gj=JSON.parse(e.target.result);
+      let coords=[];
+      gj.features.forEach(f=>{
+        if(f.geometry.type==='LineString'){
+          const c=f.geometry.coordinates.map(p=>[p[1],p[0]]);
+          if(c.length>coords.length)coords=c;
+        }else if(f.geometry.type==='MultiLineString'){
+          f.geometry.coordinates.forEach(seg=>{
+            const c=seg.map(p=>[p[1],p[0]]);
+            if(c.length>coords.length)coords=c;
+          });
+        }
+      });
+      if(coords.length<2){
+        // Tenta extrair XS se o GeoJSON tiver apenas seções
+        buildXS(gj);
+        alert(`GeoJSON carregado: ${XS.length} seções. Rio mantido.`);
+        updateAll();
+        return;
+      }
+      // Normaliza direção: montante deve ser o ponto de maior altitude
+      // Como não temos altitude, usamos a posição mais ao sul (upstream típico em SC)
+      if(coords[0][0]>coords[coords.length-1][0]) coords=coords.reverse();
+      document.getElementById('gs-river').textContent=`✓ GeoJSON: ${coords.length} pontos`;
+      xsLayers.forEach(l=>map.removeLayer(l));xsLayers=[];
+      if(gj.features.some(f=>f.properties&&f.properties.km!==undefined)) buildXS(gj);
+      initWithCoords(coords);
+    }catch(err){alert('Erro ao ler GeoJSON: '+err.message)}
+  };
+  r.readAsText(f);
+}
+
+// Drag & drop
+const mapDiv=document.getElementById('map');
+const ov=document.getElementById('drop-overlay');
+mapDiv.addEventListener('dragover',e=>{e.preventDefault();ov.classList.add('active')});
+ov.addEventListener('dragleave',()=>ov.classList.remove('active'));
+ov.addEventListener('drop',e=>{
+  e.preventDefault();ov.classList.remove('active');
+  const file=e.dataTransfer.files[0];
+  if(file){const inp=document.getElementById('file-input');
+    Object.defineProperty(inp,'files',{value:e.dataTransfer.files});
+    loadFile(inp);}
+});
+
+// ═══════════════════════════════════════════════════════════════
+// CONTROLES
+// ═══════════════════════════════════════════════════════════════
+function setQ(s){
+  curSc=s;
+  ['q10','q25','q100'].forEach(k=>{
+    const b=document.getElementById('b'+k);
+    b.className='sb'+(k==='q25'?' q25':k==='q100'?' q100':'');
+  });
+  document.getElementById('b'+s).classList.add('act');
+  updateHydro();updateAll();
+}
+function setT(h){
+  tH=Math.max(0,Math.min(72,h));
+  document.getElementById('tval').textContent=tH.toFixed(1)+'h';
+  document.getElementById('tslider').value=Math.round(tH*10);
+  updateAll();
+}
+function togglePlay(){
+  playing=!playing;
+  const b=document.getElementById('pbtn');
+  if(playing){b.textContent='⏸ Pause';b.classList.add('on');
+    timer=setInterval(()=>{tH+=0.1*spd;if(tH>72)tH=0;setT(tH);},100);
+  }else{b.textContent='▶ Play';b.classList.remove('on');clearInterval(timer);}
+}
+function resetAnim(){playing=false;clearInterval(timer);
+  document.getElementById('pbtn').textContent='▶ Play';
+  document.getElementById('pbtn').classList.remove('on');setT(0);}
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+Flow Title=Q10-Q25-Q100
+Nprof= 3
+Profile Names=Q10 ,Q25 ,Q100
+River=Itajai-Mirim
+Reach=Principal
+RS=129464.1
+  4303 , 5976 , 9084
+
+Boundary for River Rch & Prof#=
+ Itajai-Mirim,Principal 1
+  Slope= 0.001
+ Itajai-Mirim,Principal 2
+  Slope= 0.001
+ Itajai-Mirim,Principal 3
+  Slope= 0.001

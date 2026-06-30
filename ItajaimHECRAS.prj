@@ -1,0 +1,7 @@
+Proj Title=ItajaimHECRAS
+Plan File=p01
+Geom File=g01
+Flow File=f01
+Description=Rio Itajaí-Mirim - Modelo HEC-RAS 1D Steady Flow
+  Gerado automaticamente via Python/GEE (Copernicus DEM 30m)
+  Vazões de projeto Q10/Q25/Q100 por regionalização

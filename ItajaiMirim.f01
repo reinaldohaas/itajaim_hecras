@@ -1,0 +1,12 @@
+Flow Title=Vazoes de Cheia
+Program Version=6.10
+Number of Profiles= 3
+Profile Names=Q10,Q25,Q100
+River Reach=Itajai_Mirim , Main       
+RS= 189.04
+Flow= 1800 , 2500 , 3500 
+Boundary for River: Itajai_Mirim Reach: Main       
+Up Type= Normal Depth 
+Up Data= 0.005 , 0.005 , 0.005 
+Dn Type= Normal Depth 
+Dn Data= 0.0005 , 0.0005 , 0.0005 

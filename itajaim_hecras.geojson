@@ -1,0 +1,1364 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.602,
+            -27.412
+          ],
+          [
+            -49.58,
+            -27.402
+          ],
+          [
+            -49.558,
+            -27.393
+          ],
+          [
+            -49.532,
+            -27.382
+          ],
+          [
+            -49.507,
+            -27.371
+          ],
+          [
+            -49.481,
+            -27.36
+          ],
+          [
+            -49.455,
+            -27.348
+          ],
+          [
+            -49.429,
+            -27.337
+          ],
+          [
+            -49.403,
+            -27.325
+          ],
+          [
+            -49.375,
+            -27.313
+          ],
+          [
+            -49.348,
+            -27.301
+          ],
+          [
+            -49.32,
+            -27.289
+          ],
+          [
+            -49.292,
+            -27.277
+          ],
+          [
+            -49.264,
+            -27.264
+          ],
+          [
+            -49.235,
+            -27.251
+          ],
+          [
+            -49.206,
+            -27.238
+          ],
+          [
+            -49.177,
+            -27.224
+          ],
+          [
+            -49.147,
+            -27.21
+          ],
+          [
+            -49.117,
+            -27.196
+          ],
+          [
+            -49.087,
+            -27.181
+          ],
+          [
+            -49.057,
+            -27.166
+          ],
+          [
+            -49.026,
+            -27.151
+          ],
+          [
+            -48.996,
+            -27.136
+          ],
+          [
+            -48.965,
+            -27.12
+          ],
+          [
+            -48.934,
+            -27.105
+          ],
+          [
+            -48.902,
+            -27.088
+          ],
+          [
+            -48.871,
+            -27.071
+          ],
+          [
+            -48.84,
+            -27.053
+          ],
+          [
+            -48.81,
+            -27.035
+          ],
+          [
+            -48.781,
+            -27.016
+          ],
+          [
+            -48.752,
+            -26.997
+          ],
+          [
+            -48.724,
+            -26.978
+          ],
+          [
+            -48.697,
+            -26.96
+          ],
+          [
+            -48.671,
+            -26.943
+          ],
+          [
+            -48.647,
+            -26.928
+          ],
+          [
+            -48.626,
+            -26.916
+          ],
+          [
+            -48.608,
+            -26.907
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Itajai-Mirim",
+        "type": "centerline",
+        "length_km": 113.4754379330476,
+        "source": "fallback"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.59737467495361,
+            -27.42001892130966
+          ],
+          [
+            -49.60662532504638,
+            -27.40398107869034
+          ]
+        ]
+      },
+      "properties": {
+        "km": 0.0,
+        "leito_m": 368.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.579341242586615,
+            -27.411821750639042
+          ],
+          [
+            -49.58859068995792,
+            -27.395783673244843
+          ]
+        ]
+      },
+      "properties": {
+        "km": 2.0,
+        "leito_m": 364.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.56140050865971,
+            -27.404310468941294
+          ],
+          [
+            -49.56989321367019,
+            -27.38794605383003
+          ]
+        ]
+      },
+      "properties": {
+        "km": 4.0,
+        "leito_m": 390.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.54294858811081,
+            -27.39661154075166
+          ],
+          [
+            -49.55167754489475,
+            -27.380345669366076
+          ]
+        ]
+      },
+      "properties": {
+        "km": 6.0,
+        "leito_m": 397.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.5245438105121,
+            -27.38877363818662
+          ],
+          [
+            -49.53355301725243,
+            -27.37262896602978
+          ]
+        ]
+      },
+      "properties": {
+        "km": 8.0,
+        "leito_m": 451.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.50639526519796,
+            -27.38078813520852
+          ],
+          [
+            -49.51540329972725,
+            -27.36464323335857
+          ]
+        ]
+      },
+      "properties": {
+        "km": 10.0,
+        "leito_m": 583.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.48828136761006,
+            -27.37305963140875
+          ],
+          [
+            -49.49700695261048,
+            -27.356793119453776
+          ]
+        ]
+      },
+      "properties": {
+        "km": 12.0,
+        "leito_m": 575.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.46979701924048,
+            -27.36498220255977
+          ],
+          [
+            -49.47915159259713,
+            -27.34899407982682
+          ]
+        ]
+      },
+      "properties": {
+        "km": 14.0,
+        "leito_m": 777.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.45182818241211,
+            -27.35668873161756
+          ],
+          [
+            -49.46118150382319,
+            -27.340700354337194
+          ]
+        ]
+      },
+      "properties": {
+        "km": 16.0,
+        "leito_m": 832.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.43388882845482,
+            -27.34904700320329
+          ],
+          [
+            -49.44261098042343,
+            -27.332779839014428
+          ]
+        ]
+      },
+      "properties": {
+        "km": 18.0,
+        "leito_m": 755.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.41544877444064,
+            -27.34089792809182
+          ],
+          [
+            -49.42479971377956,
+            -27.32490906647135
+          ]
+        ]
+      },
+      "properties": {
+        "km": 20.0,
+        "leito_m": 686.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.397730833364534,
+            -27.33274424520424
+          ],
+          [
+            -49.40655953624355,
+            -27.31652305605637
+          ]
+        ]
+      },
+      "properties": {
+        "km": 22.0,
+        "leito_m": 742.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.37950597431946,
+            -27.32493346258885
+          ],
+          [
+            -49.38831665516496,
+            -27.308704807190185
+          ]
+        ]
+      },
+      "properties": {
+        "km": 24.0,
+        "leito_m": 525.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.36120819601882,
+            -27.31694346492176
+          ],
+          [
+            -49.37027965871383,
+            -27.300828914959414
+          ]
+        ]
+      },
+      "properties": {
+        "km": 26.0,
+        "leito_m": 472.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.34319383610355,
+            -27.308942180434006
+          ],
+          [
+            -49.35208130083008,
+            -27.292747163966116
+          ]
+        ]
+      },
+      "properties": {
+        "km": 28.0,
+        "leito_m": 380.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.325003266713516,
+            -27.301146183321777
+          ],
+          [
+            -49.3338105277678,
+            -27.284916871455927
+          ]
+        ]
+      },
+      "properties": {
+        "km": 30.0,
+        "leito_m": 354.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.30677393005422,
+            -27.293333477711855
+          ],
+          [
+            -49.31558006893201,
+            -27.2771039504251
+          ]
+        ]
+      },
+      "properties": {
+        "km": 32.0,
+        "leito_m": 207.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.288545417710196,
+            -27.28552112544724
+          ],
+          [
+            -49.29735043496956,
+            -27.26929138284408
+          ]
+        ]
+      },
+      "properties": {
+        "km": 34.0,
+        "leito_m": 314.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.270304075774604,
+            -27.277090854134002
+          ],
+          [
+            -49.27968912545646,
+            -27.26112027500899
+          ]
+        ]
+      },
+      "properties": {
+        "km": 36.0,
+        "leito_m": 324.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.252446816543234,
+            -27.26891069568227
+          ],
+          [
+            -49.26157357609153,
+            -27.25282258377469
+          ]
+        ]
+      },
+      "properties": {
+        "km": 38.0,
+        "leito_m": 308.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.23438127996009,
+            -27.260812202742464
+          ],
+          [
+            -49.24350684509619,
+            -27.244723853317254
+          ]
+        ]
+      },
+      "properties": {
+        "km": 40.0,
+        "leito_m": 285.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.216317058783766,
+            -27.252714299549808
+          ],
+          [
+            -49.22544143014738,
+            -27.23662571272967
+          ]
+        ]
+      },
+      "properties": {
+        "km": 42.0,
+        "leito_m": 152.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.19803062032418,
+            -27.244404018054272
+          ],
+          [
+            -49.207700264098825,
+            -27.22856951235683
+          ]
+        ]
+      },
+      "properties": {
+        "km": 44.0,
+        "leito_m": 279.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.18025407523586,
+            -27.235822057757087
+          ],
+          [
+            -49.1899223980075,
+            -27.2199872741535
+          ]
+        ]
+      },
+      "properties": {
+        "km": 46.0,
+        "leito_m": 337.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.162531220965064,
+            -27.227422079205034
+          ],
+          [
+            -49.17194652102012,
+            -27.21146753372139
+          ]
+        ]
+      },
+      "properties": {
+        "km": 48.0,
+        "leito_m": 131.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.14462224700634,
+            -27.219064393231037
+          ],
+          [
+            -49.15403628702721,
+            -27.203109589317954
+          ]
+        ]
+      },
+      "properties": {
+        "km": 50.0,
+        "leito_m": 93.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.12671480739157,
+            -27.210707423379475
+          ],
+          [
+            -49.13612758808592,
+            -27.19475236117669
+          ]
+        ]
+      },
+      "properties": {
+        "km": 52.0,
+        "leito_m": 82.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.10860483503841,
+            -27.2021372810129
+          ],
+          [
+            -49.11853132788074,
+            -27.186430800446683
+          ]
+        ]
+      },
+      "properties": {
+        "km": 54.0,
+        "leito_m": 80.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.090978752584796,
+            -27.193324043703107
+          ],
+          [
+            -49.10090386507208,
+            -27.177617265125328
+          ]
+        ]
+      },
+      "properties": {
+        "km": 56.0,
+        "leito_m": 65.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.07335355702802,
+            -27.184511249953058
+          ],
+          [
+            -49.08327728991831,
+            -27.168804173520105
+          ]
+        ]
+      },
+      "properties": {
+        "km": 58.0,
+        "leito_m": 245.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.055729274500464,
+            -27.175698912829162
+          ],
+          [
+            -49.06565162855945,
+            -27.159991538700794
+          ]
+        ]
+      },
+      "properties": {
+        "km": 60.0,
+        "leito_m": 200.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.03812206809578,
+            -27.167120580982512
+          ],
+          [
+            -49.04779701794836,
+            -27.151291880006582
+          ]
+        ]
+      },
+      "properties": {
+        "km": 62.0,
+        "leito_m": 90.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.020253052636996,
+            -27.158460416522505
+          ],
+          [
+            -49.03016049073664,
+            -27.14274635516431
+          ]
+        ]
+      },
+      "properties": {
+        "km": 64.0,
+        "leito_m": 42.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -49.002626256524096,
+            -27.149646825408315
+          ],
+          [
+            -49.01254453834993,
+            -27.133938572028693
+          ]
+        ]
+      },
+      "properties": {
+        "km": 66.0,
+        "leito_m": 32.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.98493295258823,
+            -27.140702423221693
+          ],
+          [
+            -48.99509018055769,
+            -27.125115968079424
+          ]
+        ]
+      },
+      "properties": {
+        "km": 68.0,
+        "leito_m": 28.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.96745109244338,
+            -27.131679316177564
+          ],
+          [
+            -48.97760688763431,
+            -27.116092544507698
+          ]
+        ]
+      },
+      "properties": {
+        "km": 70.0,
+        "leito_m": 70.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.9500581691589,
+            -27.12302422298707
+          ],
+          [
+            -48.95972635912903,
+            -27.107194097152252
+          ]
+        ]
+      },
+      "properties": {
+        "km": 72.0,
+        "leito_m": 48.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.93230550062035,
+            -27.11443404255007
+          ],
+          [
+            -48.94197237571378,
+            -27.09860363954709
+          ]
+        ]
+      },
+      "properties": {
+        "km": 74.0,
+        "leito_m": 19.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.91453206252782,
+            -27.105148860593197
+          ],
+          [
+            -48.92490379462452,
+            -27.089676438518985
+          ]
+        ]
+      },
+      "properties": {
+        "km": 76.0,
+        "leito_m": 20.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.89714802796076,
+            -27.095913279447
+          ],
+          [
+            -48.9075885625631,
+            -27.080478034268804
+          ]
+        ]
+      },
+      "properties": {
+        "km": 78.0,
+        "leito_m": 15.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.8798586826405,
+            -27.08643862373315
+          ],
+          [
+            -48.890470957441806,
+            -27.071096985344248
+          ]
+        ]
+      },
+      "properties": {
+        "km": 80.0,
+        "leito_m": 13.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.86248798438193,
+            -27.076812660065553
+          ],
+          [
+            -48.8735403427232,
+            -27.061719916963238
+          ]
+        ]
+      },
+      "properties": {
+        "km": 82.0,
+        "leito_m": 14.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.845569833436564,
+            -27.06698893649781
+          ],
+          [
+            -48.856620544241316,
+            -27.051895798928054
+          ]
+        ]
+      },
+      "properties": {
+        "km": 84.0,
+        "leito_m": 40.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.82858301577477,
+            -27.057012530130894
+          ],
+          [
+            -48.83988668193534,
+            -27.042069288495167
+          ]
+        ]
+      },
+      "properties": {
+        "km": 86.0,
+        "leito_m": 45.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.81183523785971,
+            -27.04696355977334
+          ],
+          [
+            -48.82313719585737,
+            -27.03201990045691
+          ]
+        ]
+      },
+      "properties": {
+        "km": 88.0,
+        "leito_m": 54.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.79501232294682,
+            -27.03636389953361
+          ],
+          [
+            -48.806997096981064,
+            -27.021849168695
+          ]
+        ]
+      },
+      "properties": {
+        "km": 90.0,
+        "leito_m": 19.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.77874765349626,
+            -27.02570736436867
+          ],
+          [
+            -48.79073055286117,
+            -27.011192150141362
+          ]
+        ]
+      },
+      "properties": {
+        "km": 92.0,
+        "leito_m": 81.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.76248435791233,
+            -27.01505172958403
+          ],
+          [
+            -48.77446538386752,
+            -27.000536032271732
+          ]
+        ]
+      },
+      "properties": {
+        "km": 94.0,
+        "leito_m": 32.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.74617082860898,
+            -27.004362966021763
+          ],
+          [
+            -48.758251269154925,
+            -26.989913580789068
+          ]
+        ]
+      },
+      "properties": {
+        "km": 96.0,
+        "leito_m": 48.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.730025024436614,
+            -26.993412056458318
+          ],
+          [
+            -48.74227475759804,
+            -26.979077081350916
+          ]
+        ]
+      },
+      "properties": {
+        "km": 98.0,
+        "leito_m": 35.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.714011390952166,
+            -26.982591677115582
+          ],
+          [
+            -48.726121855097915,
+            -26.96816382025114
+          ]
+        ]
+      },
+      "properties": {
+        "km": 100.0,
+        "leito_m": 5.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.69785206197171,
+            -26.971818404901786
+          ],
+          [
+            -48.70996062444912,
+            -26.957390052712096
+          ]
+        ]
+      },
+      "properties": {
+        "km": 102.0,
+        "leito_m": 0.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.68170520532254,
+            -26.96117241289652
+          ],
+          [
+            -48.69366102399953,
+            -26.946643967814058
+          ]
+        ]
+      },
+      "properties": {
+        "km": 104.0,
+        "leito_m": 3.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.66547887692787,
+            -26.950562367117385
+          ],
+          [
+            -48.67734693624093,
+            -26.935977587646832
+          ]
+        ]
+      },
+      "properties": {
+        "km": 106.0,
+        "leito_m": 10.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.649098715936795,
+            -26.94031395089537
+          ],
+          [
+            -48.660699963985344,
+            -26.925560224055975
+          ]
+        ]
+      },
+      "properties": {
+        "km": 108.0,
+        "leito_m": 38.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.63268518001252,
+            -26.930520518231415
+          ],
+          [
+            -48.64358930024442,
+            -26.915350613343985
+          ]
+        ]
+      },
+      "properties": {
+        "km": 110.0,
+        "leito_m": -1.0,
+        "type": "cross_section"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -48.61603779245133,
+            -26.92134756216792
+          ],
+          [
+            -48.625920645715404,
+            -26.90563165691545
+          ]
+        ]
+      },
+      "properties": {
+        "km": 112.0,
+        "leito_m": 0.0,
+        "type": "cross_section"
+      }
+    }
+  ]
+}
